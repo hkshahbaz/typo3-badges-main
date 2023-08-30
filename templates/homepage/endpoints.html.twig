@@ -1,0 +1,69 @@
+<div class="flex items-center justify-space-between">
+    <h2 class="font-bold text-xl flex-grow">&#x1F525;&nbsp;Endpoints</h2>
+
+    {% include 'partials/_badge-provider-toggle.html.twig' with {'section': 'endpoints'} %}
+</div>
+<hr class="my-2 border-gray-200">
+
+<ul class="rounded-md mt-2 shadow border border-gray-100">
+    {% for routeName, route in routes %}
+        <li class="px-4 md:px-6 py-4 border-b border-gray-200 last:border-none break-words">
+            <details class="badge-endpoint marker:text-gray-400" {% if loop.first %}open{% endif %}>
+                <summary>
+                    <h3 class="inline text-sm cursor-pointer">
+                        <span class="inline-block bg-blue-400 text-white px-1.5 pb-0.25 rounded font-mono mr-1">GET</span>
+                        <code class="inline border-b border-dashed pb-0.5 font-bold">{{ route.path }}</code>
+                    </h3>
+                    <span class="block text-gray mt-4">
+                        {{ route.options.description }}
+                    </span>
+                </summary>
+
+                {% for provider in providers %}
+                    {% if route.hasRequirement('extension') %}
+                        {% set routeParameters = {'extension': randomExtensionKey, 'provider': provider.identifier, '_format': 'svg'} %}
+                    {% else %}
+                        {% set routeParameters = {'provider': provider.identifier, '_format': 'svg'} %}
+                    {% endif %}
+
+                    <div class="badge-endpoint-example mt-3 md:mt-4" data-badge-provider="{{ provider.identifier }}">
+                        {% embed 'partials/_code-tabs.html.twig' with {'identifier': 'badge-endpoint-' ~ provider.identifier ~ '-' ~ routeName|replace({'.': '_'}) ~ '-%language%'} %}
+                            {% block md %}
+                                {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                    {% block content %}
+                                        <span class="text-red-400">![{{ route.options.title }}]</span><span class="text-yellow-400">(</span><span class="text-green-400">{{ url(routeName, routeParameters) }}</span><span class="text-yellow-400">)</span>
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endblock %}
+
+                            {% block rst %}
+                                {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                    {% block content %}
+                                        <span>..&nbsp;&nbsp;</span><span class="text-red-400">image::</span>&nbsp;<span class="text-green-400">{{ url(routeName, routeParameters) }}</span><br>
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="text-red-400">:alt:</span>&nbsp;<span class="text-green-400">{{ route.options.title }}</span><br>
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endblock %}
+
+                            {% block html %}
+                                {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                    {% block content %}
+                                        <span>&lt;</span><span class="text-red-400">img</span>&nbsp;<span class="text-yellow-400">alt</span><span class="text-green-400">="{{ route.options.title }}"</span>&nbsp;<span class="text-yellow-400">src</span><span class="text-green-400">="{{ url(routeName, routeParameters) }}"</span><span>&gt;</span><br>
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endblock %}
+                        {% endembed %}
+
+                        {% include 'partials/_badge.html.twig' with {
+                            'src': url(routeName, routeParameters),
+                            'title': 'Rendered badge',
+                            'class': 'mt-3 md:mt-4',
+                            'link': true,
+                            'linkClass': 'badge-endpoint-output',
+                        } %}
+                    </div>
+                {% endfor %}
+            </details>
+        </li>
+    {% endfor %}
+</ul>

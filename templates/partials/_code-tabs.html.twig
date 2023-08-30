@@ -1,0 +1,35 @@
+{% set languages = languages|default({'md': 'Markdown', 'rst': 'RST', 'html': 'HTML'}) %}
+
+<ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400"
+    data-tabs-toggle="#{{ identifier|replace({'%language%': 'container'}) }}"
+    role="tablist"
+>
+    {% for language, label in languages %}
+        <li class="mr-4" role="presentation">
+            <button class="group relative text-xs font-bold py-1 uppercase text-gray-600 hover:text-red-600 aria-selected:text-red-500 dark:text-gray-600 dark:hover:text-red-600 dark:aria-selected:text-red-500"
+                    id="{{ identifier|replace({'%language%': language}) }}-trigger"
+                    data-tabs-target="#{{ identifier|replace({'%language%': language}) }}"
+                    data-sync-language="{{ language }}"
+                    type="button"
+                    role="tab"
+                    aria-controls="{{ identifier|replace({'%language%': language}) }}"
+                    aria-selected="false"
+            >
+                <span class="h-0 w-0 border-x-8 border-x-transparent border-b-8 border-b-gray-700 absolute -bottom-2 left-1/2 -ml-2 hidden group-aria-selected:block"></span>
+                <span class="{{ identifier|replace({'%language%': language}) }}-label">{{ label }}</span>
+            </button>
+        </li>
+    {% endfor %}
+</ul>
+
+<div id="{{ identifier|replace({'%language%': 'container'}) }}">
+    {% for language in languages|keys %}
+        <div class="hidden"
+             id="{{ identifier|replace({'%language%': language}) }}"
+             role="tabpanel"
+             aria-labelledby="{{ identifier|replace({'%language%': language}) }}-label"
+        >
+            {{ block(language) }}
+        </div>
+    {% endfor %}
+</div>

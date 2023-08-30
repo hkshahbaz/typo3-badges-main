@@ -1,0 +1,31 @@
+<button id="badge-providers-button-{{ section }}" data-dropdown-toggle="badge-providers-{{ section }}" type="button"
+        class="badge-providers-button js-hidden relative shadow-md border border-gray-100 text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-orange-300 font-medium rounded-md text-sm px-4 py-2 text-center inline-flex items-center"
+        aria-labelledby="badge-providers-button-{{ section }}-label"
+>
+    <span class="badge-providers-button-ping flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-typo3-orange"></span>
+    </span>
+
+    <span id="badge-providers-button-{{ section }}-label" class="badge-providers-button-label">{{ defaultProvider.name }}</span>
+    <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+</button>
+
+<div id="badge-providers-{{ section }}" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+    <div class="py-1">
+        {% for identifier, provider in providers %}
+            <label for="badge-provider-{{ section }}-{{ identifier }}">
+                <input type="radio" name="badge-provider-{{ section }}" id="badge-provider-{{ section }}-{{ identifier }}"
+                       data-badge-provider="{{ identifier }}" data-badge-provider-name="{{ provider.name }}"
+                       class="badge-provider sr-only"
+                       {% if provider == defaultProvider %}checked{% endif %} />
+                <span class="flex items-center py-2 pl-3 pr-4 text-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
+                    <span class="opacity-0 text-gray-400 mr-1.5">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </span>
+                    {{ provider.name }}
+                </span>
+            </label>
+        {% endfor %}
+    </div>
+</div>

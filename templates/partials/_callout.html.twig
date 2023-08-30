@@ -1,0 +1,32 @@
+{% set icons = {
+    'info': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+    'success': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+    'error': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>',
+    'warning': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+} %}
+{% set backgroundColors = {
+    'info': 'bg-blue-50',
+    'success': 'bg-green-50',
+    'error': 'bg-red-50',
+    'warning': 'bg-orange-50',
+} %}
+{% set colors = {
+    'info': 'text-blue-500',
+    'success': 'text-green-500',
+    'error': 'text-red-500',
+    'warning': 'text-orange-500',
+} %}
+
+<div class="rounded-md shadow {{ backgroundColors[severity] }} p-4 mt-3 md:mt-4">
+    <div class="flex items-start space-x-2.5 {{ colors[severity] }}">
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">{{ icons[severity] | raw }}</svg>
+        <div>
+            <div class="mt-0.5 text-sm font-semibold">
+                {{ header }}
+            </div>
+            <div class="mt-1 text-sm font-medium text-gray-600">
+                {{ body | raw }}
+            </div>
+        </div>
+    </div>
+</div>

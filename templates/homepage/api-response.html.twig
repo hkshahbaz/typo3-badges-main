@@ -1,0 +1,58 @@
+<div class="flex items-center justify-space-between">
+    <h2 class="font-bold text-xl flex-grow">&#x1F916;&nbsp;JSON response schema</h2>
+
+    {% include 'partials/_badge-provider-toggle.html.twig' with {'section': 'api-response'} %}
+</div>
+<hr class="my-2 border-gray-200">
+
+{# Badgen #}
+<div data-badge-provider="{{ providers.badgen.identifier }}" class="mt-3 md:mt-4">
+    <div class="text-xs font-bold py-1 uppercase text-gray-600">
+        {{ providers.badgen.name }}
+    </div>
+
+    <p class="text-gray mt-2">
+        All JSON endpoints return objects to be processed by Badgen.
+    </p>
+    {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+        {% block content %}
+{
+    <span class="text-red-400">"subject"</span>: <span class="text-green-400">"typo3"</span>,
+    <span class="text-red-400">"status"</span>: <span class="text-green-400">"inspiring people to share"</span>,
+    <span class="text-red-400">"color"</span>: <span class="text-green-400">"orange"</span>
+}
+        {% endblock %}
+    {% endembed %}
+    <p class="text-gray mt-3 md:mt-4">
+        Take a look at the <a href="https://badgen.net/https" class="font-bold hover:underline">official documentation of Badgen</a>
+        to get an overview about how JSON data is processed.
+    </p>
+</div>
+
+{# Shields #}
+<div data-badge-provider="{{ providers.shields.identifier }}" class="mt-3 md:mt-4">
+    <div class="text-xs font-bold py-1 uppercase text-gray-600">
+        {{ providers.shields.name }}
+    </div>
+
+    <p class="text-gray mt-2">
+        All JSON endpoints return objects to be processed by Shields.io.
+    </p>
+    {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+        {% block content %}
+{
+    <span class="text-red-400">"schemaVersion"</span>: <span class="text-yellow-400">1</span>,
+    <span class="text-red-400">"label"</span>: <span class="text-green-400">"typo3"</span>,
+    <span class="text-red-400">"message"</span>: <span class="text-green-400">"inspiring people to share"</span>,
+    <span class="text-red-400">"color"</span>: <span class="text-green-400">"orange"</span>,
+    <span class="text-red-400">"isError"</span>: <span class="text-yellow-400">false</span>,
+    <span class="text-red-400">"namedLogo"</span>: <span class="text-green-400">"typo3"</span>
+}
+        {% endblock %}
+    {% endembed %}
+    <p class="text-gray mt-3 md:mt-4">
+        Take a look at the <a href="https://shields.io/endpoint" class="font-bold hover:underline">official documentation of Shields.io</a>
+        to get an overview about how JSON data is processed. There you will also find
+        ways to override the configuration sent by the API.
+    </p>
+</div>

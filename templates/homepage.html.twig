@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TYPO3 Badges{% endblock %}
+
+{% block bodyClass %}bg-typo3-orange bg-gradient-to-br from-typo3-orange to-red-900 pt-10 md:pt-20 pb-4 md:pb-6 px-2 selection:bg-typo3-orange selection:text-white{% endblock %}
+
+{% block body %}
+
+<main class="bg-white max-w-3xl mx-auto p-8 md:p-12 mb-10 rounded-lg shadow-2xl relative">
+    <section>
+        <h1 class="font-bold text-2xl">TYPO3 Badges</h1>
+        <p class="text-gray-600 pt-2">A beautiful eye-catcher for your extension documentations.</p>
+
+        {% include 'partials/_callout.html.twig' with {
+            'severity': 'info',
+            'header': 'TER extensions only',
+            'body': 'Please note: Only TYPO3 extensions published at '
+                ~ '<a href="https://extensions.typo3.org/" rel="nofollow" class="font-bold hover:underline">'
+                ~ 'TYPO3 extension repository (TER)</a> are supported, because all extension metadata are fetched '
+                ~ 'from TER REST API.',
+        } %}
+    </section>
+
+    <section class="mt-8 md:mt-10">
+        {% include 'homepage/usage.html.twig' %}
+    </section>
+
+    <section class="mt-4">
+        {% include 'homepage/try-out.html.twig' %}
+    </section>
+
+    <section class="mt-8 md:mt-10 relative">
+        <aside class="absolute subpixel-antialiased left-full ml-12 md:ml-16 -top-[5.5rem] text-white hidden xl:block js-hidden select-none">
+            <p class="font-cursive whitespace-nowrap mt-2 text-md">Select your favorite provider here</p>
+
+            <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 26 28" xmlns="http://www.w3.org/2000/svg"><path stroke-width="0.75" stroke-miterlimit="10" stroke-dasharray="2, 0.75" d="M 2.15,25.632624 H 3.07 4.1 c 1.44,0 2.85,-0.17 4.21,-0.51 1.36,-0.33 2.67,-0.82 3.92,-1.46 1.25,-0.63 2.44,-1.41 3.55,-2.3 1.11,-0.9 2.15,-1.92 3.09,-3.05 0.94,-1.13 1.8,-2.37 2.55,-3.7 0.75,-1.33 1.4,-2.75 1.93,-4.25 0.53,-1.5000002 0.94,-3.0700002 1.22,-4.6900002 0.28,-1.63 0.43,-3.31 0.43,-5.03999996" /><polygon fill="currentColor" points="0,3 2.59,1.5 2.59,4.5 " transform="matrix(1,0,0,-1,0,28.632624)" /></svg>
+        </aside>
+
+        {% include 'homepage/endpoints.html.twig' %}
+    </section>
+
+    <section class="mt-8 md:mt-10">
+        {% include 'homepage/api-response.html.twig' %}
+    </section>
+
+    <section class="mt-8 md:mt-10">
+        <h2 class="font-bold text-xl">&#x1F914;&nbsp;Anything else?</h2>
+        <hr class="my-2 border-gray-200">
+        <p class="text-gray mt-2 md:mt-4">
+            If you are missing something, feel free to
+            <a href="https://github.com/eliashaeussler/typo3-badges/issues" rel="nofollow" class="font-bold hover:underline">create an issue</a>
+            or
+            <a href="https://github.com/eliashaeussler/typo3-badges/pulls" rel="nofollow" class="font-bold hover:underline">submit a pull request</a>.
+        </p>
+    </section>
+
+    <section>
+        <a href="https://github.com/eliashaeussler/typo3-badges" rel="nofollow"
+           class="group absolute right-0 top-0 rounded-tr-lg overflow-hidden" title="View project on GitHub"
+        >
+            <div class="block c-triangle-right-up text-gray-700 group-hover:text-gray-900 transition"></div>
+            <div class="w-3/5 h-3/5 absolute top-0 right-0 flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+            </div>
+        </a>
+    </section>
+</main>
+
+<footer class="max-w-3xl mx-auto text-center mt-12 mb-6">
+    <div class="flex flex-wrap place-content-center space-x-2 -mt-2">
+        {% include 'partials/_badge.html.twig' with {
+            'src': 'https://shields.io/endpoint?url=' ~ url('badge.default') ~ '&color=white',
+            'title': 'TYPO3 badge',
+            'class': 'mt-2',
+        } %}
+        {% include 'partials/_badge.html.twig' with {
+            'src': 'https://img.shields.io/github/v/release/eliashaeussler/typo3-badges?logo=github',
+            'title': 'Current version badge',
+            'link': 'https://github.com/eliashaeussler/typo3-badges',
+            'linkClass': 'mt-2',
+        } %}
+        {% include 'partials/_badge.html.twig' with {
+            'src': 'https://img.shields.io/badge/dynamic/json?color=green&label=last+deployment&query=0.updated_at&url='
+                ~ ('https://api.github.com/repos/eliashaeussler/typo3-badges/deployments?environment=production' | url_encode),
+            'title': 'Last deployment badge',
+            'link': 'https://github.com/eliashaeussler/typo3-badges/deployments/activity_log?environment=production',
+            'linkClass': 'mt-2',
+        } %}
+    </div>
+
+    <p class="text-white text-sm mt-4">
+        Created with &#x2764; in Berlin by <a href="https://haeussler.dev" class="font-bold hover:underline">Elias Häußler</a>
+    </p>
+</footer>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+<button id="try-out-trigger-button" type="button"
+        aria-labelledby="try-out-trigger-button-label" data-modal-trigger="try-out-modal"
+        class="shadow-md text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-md text-sm px-4 py-2 text-center inline-flex items-center"
+>
+    <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg>
+    <span id="try-out-trigger-button">Try it out</span>
+</button>
+
+<div id="try-out-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <div class="bg-white rounded-lg shadow-2xl relative">
+            <div class="absolute top-0 right-0 p-2">
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-trigger="try-out-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+            <form class="px-6 py-4 space-y-6 lg:px-8 sm:py-6 xl:py-8" action="#">
+                <h3 class="text-xl font-bold">&#x26A1;&nbsp;Create your TYPO3 badges</h3>
+                <div>
+                    <label for="try-out-extension-key" class="block mb-2 text-sm font-medium text-gray-900">Extension key</label>
+                    <input type="text" name="try-out-extension-key" id="try-out-extension-key" autocomplete="off" autocapitalize="off" spellcheck="false" class="shadow-md outline-none w-full border border-gray-100 text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-orange-300 font-medium rounded-md text-sm px-4 py-2" placeholder="e.g. {{ randomExtensionKey }}" required>
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <button type="submit" class="js-hidden shadow-md text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-md text-sm px-4 py-2 text-center inline-flex items-center">
+                        <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path></svg>
+                        <span id="try-out-trigger-button">Create badges</span>
+                    </button>
+                    {% include 'partials/_badge-provider-toggle.html.twig' with {'section': 'try-out'} %}
+                </div>
+                <div id="try-out-template" class="hidden">
+                    {% for provider in providers %}
+                        <div data-badge-provider="{{ provider.identifier }}" class="-mt-2 space-y-6">
+                            <div>
+                                {% apply spaceless %}
+                                    {% for routeName, route in routes %}
+                                        {% if route.hasRequirement('extension') %}
+                                            {% include 'partials/_badge.html.twig' with {
+                                                'src': url(routeName, {'extension': 'EXTENSION_KEY', 'provider': provider.identifier, '_format': 'svg'}),
+                                                'title': 'TYPO3 badge',
+                                                'class': 'mr-1 mt-1 inline-block',
+                                            } %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endapply %}
+                            </div>
+
+                            <div>
+                                {% embed 'partials/_code-tabs.html.twig' with {'identifier': 'badge-example-' ~ provider.identifier ~ '-EXTENSION_KEY-%language%'} %}
+                                    {% block md %}
+                                        {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                            {% block content %}
+                                                {% for routeName, route in routes %}
+                                                    {% if route.hasRequirement('extension') %}
+                                                        <span class="text-red-400">![{{ route.options.title }}]</span><span class="text-yellow-400">(</span><span class="text-green-400">{{ url(routeName, {'extension': 'EXTENSION_KEY', 'provider': provider.identifier, '_format': 'svg'}) }}</span><span class="text-yellow-400">)</span><br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="text-gray-400" style="font-variant-ligatures: none;">&lt;!-- Generated with 🧡 at {{ app.request.host() }} --&gt;</span>
+                                            {% endblock %}
+                                        {% endembed %}
+                                    {% endblock %}
+
+                                    {% block rst %}
+                                        {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                            {% block content %}
+                                                {% for routeName, route in routes %}
+                                                    {% if route.hasRequirement('extension') %}
+                                                        <span>..&nbsp;&nbsp;</span><span class="text-red-400">image::</span>&nbsp;<span class="text-green-400">{{ url(routeName, {'extension': 'EXTENSION_KEY', 'provider': provider.identifier, '_format': 'svg'}) }}</span><br>
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="text-red-400">:alt:</span>&nbsp;<span class="text-green-400">{{ route.options.title }}</span><br><br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="text-gray-400" style="font-variant-ligatures: none;">&lt;!-- Generated with 🧡 at {{ app.request.host() }} --&gt;</span>
+                                            {% endblock %}
+                                        {% endembed %}
+                                    {% endblock %}
+
+                                    {% block html %}
+                                        {% embed 'partials/_code-block.html.twig' with {'showCopyButton': true} %}
+                                            {% block content %}
+                                                {% for routeName, route in routes %}
+                                                    {% if route.hasRequirement('extension') %}
+                                                        <span>&lt;</span><span class="text-red-400">img</span>&nbsp;<span class="text-yellow-400">alt</span><span class="text-green-400">="{{ route.options.title }}"</span>&nbsp;<span class="text-yellow-400">src</span><span class="text-green-400">="{{ url(routeName, {'extension': 'EXTENSION_KEY', 'provider': provider.identifier, '_format': 'svg'}) }}"</span><span>&gt;</span><br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="text-gray-400" style="font-variant-ligatures: none;">&lt;!-- Generated with 🧡 at {{ app.request.host() }} --&gt;</span>
+                                            {% endblock %}
+                                        {% endembed %}
+                                    {% endblock %}
+                                {% endembed %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div id="try-out-output" class="hidden"></div>
+            </form>
+        </div>
+    </div>
+</div>

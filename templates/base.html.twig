@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="antialiased touch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% if block('title') is defined %}
+        {% set title = block('title') %}
+    {% else %}
+        {% set title = 'TYPO3 Badges' %}
+    {% endif %}
+
+    <!-- Primary Meta Tags -->
+    <title>{{ title }}</title>
+    <meta name="title" content="{{ title }}">
+    <meta name="description" content="API with JSON endpoints to create beautiful badges for extensions from the TYPO3 Extension Repository (TER). Supports {% for provider in providers %}{{ provider.name }}{% if loop.last %}.{% elseif loop.revindex0 == 1 %} and {% else %}, {% endif %}{% endfor %}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ app.request.uri }}">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="API with JSON endpoints to create beautiful badges for extensions from the TYPO3 Extension Repository (TER). Supports {% for provider in providers %}{{ provider.name }}{% if loop.last %}.{% elseif loop.revindex0 == 1 %} and {% else %}, {% endif %}{% endfor %}">
+    <meta property="og:image" content="{{ absolute_url(asset('assets/img/header.png')) }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ app.request.uri }}">
+    <meta property="twitter:title" content="{{ title }}">
+    <meta property="twitter:description" content="API with JSON endpoints to create beautiful badges for extensions from the TYPO3 Extension Repository (TER). Supports {% for provider in providers %}{{ provider.name }}{% if loop.last %}.{% elseif loop.revindex0 == 1 %} and {% else %}, {% endif %}{% endfor %}">
+    <meta property="twitter:image" content="{{ absolute_url(asset('assets/img/header.png')) }}">
+
+    {{ encore_entry_link_tags('fonts') }}
+    {{ encore_entry_link_tags('main') }}
+</head>
+<body class="{% block bodyClass %}{% endblock %}">
+    {% block body %}{% endblock %}
+
+    {{ encore_entry_script_tags('main') }}
+</body>
+</html>

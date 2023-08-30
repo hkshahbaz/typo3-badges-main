@@ -1,0 +1,12 @@
+{% if link is defined %}
+    <a href="{% if link is same as(true) %}{{ src }}{% else %}{{ link }}{% endif %}" rel="nofollow" {% if linkClass is defined %}class="{{ linkClass }}"{% endif %}>
+{% endif %}
+        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+             data-src="{{ src }}"
+             alt="{{ title }}"
+             data-lazy-classes="w-28 bg-gray-200 rounded-sm animation-pulse"
+             class="h-5 w-28 bg-gray-200 rounded-sm animation-pulse {% if class is defined %}{{ class }}{% endif%}"
+        />
+{% if link is defined and link %}
+    </a>
+{% endif %}

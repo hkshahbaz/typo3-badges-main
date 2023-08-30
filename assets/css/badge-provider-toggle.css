@@ -1,0 +1,7 @@
+.badge-provider:checked + span {
+  @apply bg-gray-100 text-black;
+}
+
+.badge-provider:checked + span > span {
+  @apply opacity-100;
+}
