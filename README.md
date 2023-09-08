@@ -31,7 +31,7 @@ endpoints provide either rendered SVG badges or JSON configuration for use with
 An overview of all endpoints and their usage can be found on the
 [official website](https://typo3-badges.dev).
 
-## :star: License
+## :star: License.
 
 This project is licensed under [GNU General Public License 3.0 (or later)](LICENSE).
 
